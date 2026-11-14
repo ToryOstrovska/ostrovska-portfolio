@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="hero__center">
         <p className="hero__badge">UX/UI ДИЗАЙНЕРКА · НІМЕЧЧИНА</p>
         <h1 id="hero-title" className="hero__title">
-          Проєктую сайти й застосунки для e-commerce-команд
+          Проєктую сайти й застосунки для <span className="nowrap">e-commerce</span>-команд
         </h1>
         <p className="hero__lead">
           Щоб кнопка не бісила, а замовлення з телефона займало менше кроків.

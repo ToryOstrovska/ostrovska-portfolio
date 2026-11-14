@@ -133,7 +133,7 @@ p, h1, figure { margin: 0; }
   .bubble { left: .8333em; width: 8.875em; font-size: 1.5em; padding: .5em .75em; border-radius: 22px; }
   .bubble__tail { left: 3.75em; top: 5.4375em; width: 1.75em; height: 1.625em; }
   .mascot__img { top: 7.5625em; width: 13.75em; height: 13.75em; }
-  .mascot__credit { left: 3.0625em; top: 21.6875em; font-size: .8125em; }
+  .mascot__credit { left: 3.7692em; top: 26.6923em; font-size: .8125em; }
 }
 
 /* Адаптив */

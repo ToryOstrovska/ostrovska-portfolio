@@ -45,28 +45,10 @@ p, h1, figure { margin: 0; }
 /* Бургер: на десктопі прихований */
 .burger { display: none; }
 
-/* Перший екран (макет 1200×430) */
-.hero { position: relative; width: 100%; max-width: 1200px; height: 430px; margin: 0 auto; }
+/* Перший екран */
+.hero { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; }
 
-.polaroid {
-  position: absolute; left: -24px; top: 66px;
-  transform: rotate(-6deg);
-  background: #fff; border: 1px solid var(--line);
-  padding: 14px 14px 16px;
-  display: flex; flex-direction: column; gap: 12px;
-  filter: drop-shadow(0 6px 8px rgba(92,69,41,.06)) drop-shadow(0 1px 1px rgba(92,69,41,.06));
-}
-.polaroid__photo {
-  width: 196px; height: 220px; border-radius: 2px; background: var(--peach);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 500; font-size: 15px; color: var(--photo-text);
-}
-.polaroid__caption { font-family: var(--font-hand); font-weight: 700; font-size: 26px; }
-
-.hero__center {
-  position: absolute; left: 50%; top: 56px; transform: translateX(-50%);
-  width: 820px; text-align: center;
-}
+.hero__center { width: 820px; text-align: center; }
 .hero__badge { font-weight: 500; font-size: 14px; letter-spacing: 1.12px; color: var(--accent); }
 .hero__title {
   margin-top: 30px;
@@ -87,63 +69,88 @@ p, h1, figure { margin: 0; }
 .btn--ghost { border: 1.5px solid var(--ink); color: var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: #fff; }
 
-.mascot { position: absolute; right: -10px; top: 29px; width: 220px; height: 400px; }
+/* Картка, що перевертається: фото ↔ маскот */
+.hero__card {
+  --u: 17px; --b: 24px;
+  position: relative; font-size: var(--u);
+  padding-top: calc(3.2 * var(--b) + 24px);
+}
 .bubble {
-  position: absolute; left: 20px; top: 0; width: 213px;
-  transform: rotate(-3deg);
-  background: #fff; border: 2px solid var(--ink); border-radius: 22px; padding: 12px 18px;
-  font-family: var(--font-hand); font-weight: 700; font-size: 24px; line-height: 1.1;
+  position: absolute; z-index: 2; left: -.5em; bottom: calc(100% - (3.2 * var(--b) + 24px) + 6px);
+  transform: rotate(-3deg); transform-origin: left bottom;
+  background: #fff; border: 2px solid var(--ink); border-radius: 22px; padding: .5em .75em;
+  font-family: var(--font-hand); font-weight: 700; font-size: var(--b); line-height: 1.1;
   white-space: nowrap;
 }
-.bubble__tail { position: absolute; left: 60px; top: 87px; width: 28px; height: 26px; }
-.mascot__img { position: absolute; left: 0; top: 121px; width: 220px; height: 220px; object-fit: contain; }
-.mascot__credit {
-  position: absolute; left: 49px; top: 347px;
-  transform: rotate(3deg); font-size: 13px; color: var(--muted); white-space: nowrap;
+/* Хвостик — частина бульбашки (два трикутники: обводка й заливка), вказує на картку */
+.bubble::before, .bubble::after {
+  content: ""; position: absolute; left: 1.4em; width: 0; height: 0;
+  border-style: solid; border-color: transparent;
+  transform: skewX(-28deg); transform-origin: top;
+}
+.bubble::before { bottom: -22px; border-width: 22px 14px 0; border-top-color: var(--ink); }
+.bubble::after  { bottom: -19px; border-width: 19px 12px 0; border-top-color: #fff; margin-left: 2px; }
+
+.flip {
+  display: block; position: relative; width: 15.75em; height: 20.5em; padding: 0; border: 0;
+  background: none; font: inherit; color: var(--ink); cursor: pointer; text-align: left;
+  perspective: 1200px; transform: rotate(-4deg); -webkit-tap-highlight-color: transparent;
+}
+.flip:focus-visible { outline-offset: 8px; }
+.flip__inner {
+  position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .6s ease;
+}
+.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+.flip__face {
+  position: absolute; inset: 0; display: flex; flex-direction: column; gap: .75em;
+  padding: .875em .875em 1em; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 6px 14px rgba(92,69,41,.10), 0 1px 2px rgba(92,69,41,.08);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.flip__back { transform: rotateY(180deg); }
+.flip__photo {
+  flex: 1; min-height: 0; border-radius: 2px; background: var(--peach); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500; font-size: .9375em; color: var(--photo-text);
+}
+.flip__photo img { width: 100%; height: 100%; object-fit: contain; }
+.flip__caption {
+  font-family: var(--font-hand); font-weight: 700; font-size: 1.625em; line-height: 1.1;
+  margin-right: 1.4em;
+}
+.flip__caption--back { font-size: 1.3em; color: var(--muted); }
+.flip__icon {
+  position: absolute; right: .8em; bottom: .85em; width: 1.15em; height: 1.15em;
+  opacity: .55; color: var(--ink);
+}
+.flip__back .flip__icon { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip__inner { transition: none; }
 }
 
-/* Десктоп: перший екран на всю висоту вікна, елементи масштабуються з шириною */
+/* Десктоп: на всю висоту вікна, текст ліворуч, картка праворуч */
 @media (min-width: 1101px) {
   .top { padding-inline: clamp(48px, 5vw, 96px); min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
   .hero {
-    flex: 1; height: auto; min-height: 540px; max-width: 1680px;
-    display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center; column-gap: clamp(24px, 3vw, 64px);
+    flex: 1; min-height: 540px; max-width: 1680px;
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    align-items: center; column-gap: clamp(24px, 4vw, 80px);
   }
-  .polaroid, .hero__center, .mascot { position: static; transform: none; }
-
-  .polaroid {
-    --u: clamp(16px, 1.3vw, 24px);
-    font-size: var(--u); justify-self: start;
-    transform: rotate(-6deg); padding: .875em .875em 1em; gap: .75em;
-  }
-  .polaroid__photo { width: 14em; height: 15.75em; font-size: .9375em; }
-  .polaroid__caption { font-size: 1.75em; }
-
-  .hero__center { width: 100%; justify-self: center; }
+  .hero__center { width: 100%; text-align: left; justify-self: start; }
   .hero__badge { font-size: clamp(14px, 1.05vw, 18px); }
   .hero__title { margin-top: clamp(30px, 3vh, 48px); font-size: clamp(40px, 3.4vw, 64px); }
-  .hero__lead { width: 100%; max-width: 720px; font-size: clamp(20px, 1.5vw, 26px); margin-top: clamp(24px, 3vh, 36px); }
-  .hero__actions { margin-top: clamp(40px, 5vh, 64px); }
-
-  .mascot {
-    font-size: clamp(16px, 1.3vw, 24px); position: relative; justify-self: end;
-    width: 13.75em; height: 25em;
-  }
-  .bubble { left: .8333em; width: 8.875em; font-size: 1.5em; padding: .5em .75em; border-radius: 22px; }
-  .bubble__tail { left: 3.75em; top: 5.4375em; width: 1.75em; height: 1.625em; }
-  .mascot__img { top: 7.5625em; width: 13.75em; height: 13.75em; }
-  .mascot__credit { left: 3.7692em; top: 26.6923em; font-size: .8125em; }
+  .hero__lead { width: 100%; max-width: 640px; margin-left: 0; font-size: clamp(20px, 1.5vw, 26px); margin-top: clamp(24px, 3vh, 36px); }
+  .hero__actions { justify-content: flex-start; margin-top: clamp(40px, 5vh, 64px); }
+  .hero__card { --u: clamp(18px, 1.6vw, 28px); --b: clamp(24px, 1.75vw, 32px); justify-self: center; }
 }
 
 /* Адаптив */
 @media (max-width: 1100px) {
   .top { padding: 0 32px 40px; }
-  .hero { height: auto; display: flex; flex-direction: column; align-items: center; gap: 32px; padding-top: 24px; }
-  .polaroid, .hero__center, .mascot { position: static; transform: none; }
-  .polaroid { transform: rotate(-4deg); order: 2; }
+  .hero { display: flex; flex-direction: column; align-items: center; gap: 32px; padding-top: 24px; }
   .hero__center { order: 1; width: 100%; }
-  .mascot { order: 3; width: 240px; height: 400px; position: relative; right: auto; }
+  .hero__card { order: 2; }
   .hero__title { font-size: 32px; }
   .hero__lead { width: 100%; max-width: 560px; }
 }

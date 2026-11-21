@@ -1,9 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./fonts.css";
-import "@fontsource/onest/400.css";
-import "@fontsource/onest/500.css";
-import "@fontsource/onest/600.css";
 import "./styles.css";
 import App from "./App";
 

@@ -8,7 +8,7 @@
   --photo-text: #8a8172;
   --font-hand: "Caveat", cursive;
   --font-body: "Onest", system-ui, sans-serif;
-  --font-display: "Unbounded", "Onest", sans-serif;
+  --font-display: "Dela Gothic One", "Onest", sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -52,7 +52,7 @@ p, h1, figure { margin: 0; }
 .hero__badge { font-weight: 500; font-size: 14px; letter-spacing: 1.12px; color: var(--accent); }
 .hero__title {
   margin-top: 30px;
-  font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1.25;
+  font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.25;
 }
 .hero__lead {
   width: 560px; margin: 24px auto 0;
